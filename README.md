@@ -17,6 +17,9 @@ require 'ndx-server'
     to: 'email@email.com'
     subject: 'email subject'
     message: 'email message'
+  , (err) ->
+    if not err
+      console.log 'email sent'
 ```
 ## environment variables  
 |environment|config|description|
