@@ -1,6 +1,6 @@
 {
   "name": "ndx-gmail",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "connect to gsuite and send emails for ndx-framework",
   "main": "build/index.js",
   "scripts": {
@@ -23,6 +23,6 @@
     "load-grunt-tasks": "^3.5.2"
   },
   "dependencies": {
-    "googleapis": "^17.1.0"
+    "express-mailer": "^0.3.1"
   }
 }
