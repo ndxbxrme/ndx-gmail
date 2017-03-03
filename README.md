@@ -3,7 +3,16 @@
 install with  
 `npm install --save ndx-gmail jade`  
 ## requirements
-make a directory in root called `/views` and put your email templates in there
+make a directory in root called `/views` and put your email templates in there  
+`views/mail.jade`  
+```jade
+html
+  head
+   title= subject
+  body
+    h1= subject
+    p= message
+```
 ## example
 `src/server/app.coffee`  
 ```coffeescript
