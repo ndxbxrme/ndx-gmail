@@ -1,9 +1,9 @@
 'use strict'
+mailer = require 'express-mailer'
 
 module.exports = (ndx) ->
   user = process.env.GMAIL_USER or ndx.settings.GMAIL_USER
   pass = process.env.GMAIL_PASS or ndx.settings.GMAIL_PASS
-  mailer = require 'express-mailer'
   mailer.extend ndx.app,
     from: user
     host: 'smtp.gmail.com'
@@ -13,10 +13,21 @@ module.exports = (ndx) ->
     auth:
       user: user
       pass: pass
+  callbacks = 
+    send: []
+    error: []
+  safeCallback = (name, obj) ->
+    for cb in callbacks[name]
+      cb obj
   ndx.gmail =
     send: (ctx, cb) ->
       ndx.app.mailer.send ctx.template,
         to: ctx.to
         subject: ctx.subject
         context: ctx
-      , cb
+      , (err, res) ->
+        if err
+          safeCallback 'error', err
+        else
+          safeCallback 'send', res
+        cb?()
