@@ -35,18 +35,28 @@
     };
     return ndx.gmail = {
       send: function(ctx, cb) {
-        return ndx.app.mailer.send(ctx.template, {
-          to: ctx.to,
-          subject: ctx.subject,
-          context: ctx
-        }, function(err, res) {
-          if (err) {
-            safeCallback('error', err);
-          } else {
-            safeCallback('send', res);
-          }
-          return typeof cb === "function" ? cb() : void 0;
-        });
+        if (process.env.GMAIL_OVERRIDE) {
+          ctx.to = process.env.GMAIL_OVERRIDE;
+        }
+        if (!process.env.GMAIL_DISABLE) {
+          return ndx.app.mailer.send(ctx.template, {
+            to: ctx.to,
+            subject: ctx.subject,
+            context: ctx
+          }, function(err, res) {
+            if (err) {
+              safeCallback('error', err);
+            } else {
+              safeCallback('send', res);
+            }
+            return typeof cb === "function" ? cb() : void 0;
+          });
+        } else {
+          console.log('sending email');
+          console.log(ctx.to);
+          console.log(ctx.subject);
+          return console.log(ctx.template);
+        }
       }
     };
   };
