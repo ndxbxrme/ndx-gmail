@@ -5,9 +5,18 @@
   mailer = require('express-mailer');
 
   module.exports = function(ndx) {
-    var callbacks, pass, safeCallback, user;
+    var callbacks, fillTemplate, pass, safeCallback, user;
     user = process.env.GMAIL_USER || ndx.settings.GMAIL_USER;
     pass = process.env.GMAIL_PASS || ndx.settings.GMAIL_PASS;
+    fillTemplate = function(template, data) {
+      return template.replace(/\{\{(.+?)\}\}/g, function(all, match) {
+        var evalInContext;
+        evalInContext = function(str, context) {
+          return (new Function("with(this) {return " + str + "}")).call(context);
+        };
+        return evalInContext(match, data);
+      });
+    };
     callbacks = {
       send: [],
       error: []
@@ -44,7 +53,7 @@
           if (!process.env.GMAIL_DISABLE) {
             return ndx.app.mailer.send(ctx.template, {
               to: ctx.to,
-              subject: ctx.subject,
+              subject: fillTemplate(ctx.subject, ctx),
               context: ctx
             }, function(err, res) {
               if (err) {

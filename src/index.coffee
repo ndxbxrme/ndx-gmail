@@ -4,6 +4,12 @@ mailer = require 'express-mailer'
 module.exports = (ndx) ->
   user = process.env.GMAIL_USER or ndx.settings.GMAIL_USER
   pass = process.env.GMAIL_PASS or ndx.settings.GMAIL_PASS
+  fillTemplate = (template, data) ->
+    template.replace /\{\{(.+?)\}\}/g, (all, match) ->
+      evalInContext = (str, context) ->
+        (new Function("with(this) {return #{str}}"))
+        .call context
+      evalInContext match, data
   callbacks = 
     send: []
     error: []
@@ -28,7 +34,7 @@ module.exports = (ndx) ->
         if not process.env.GMAIL_DISABLE
           ndx.app.mailer.send ctx.template,
             to: ctx.to
-            subject: ctx.subject
+            subject: fillTemplate ctx.subject, ctx
             context: ctx
           , (err, res) ->
             if err
