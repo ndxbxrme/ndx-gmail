@@ -34,13 +34,13 @@
     if (user && pass) {
       mailer.extend(ndx.app, {
         from: user,
-        service: 'Gmail',
+        host: 'smtp.gmail.com',
+        secureConnection: false,
+        port: 465,
+        transportMethod: 'SMTP',
         auth: {
           user: user,
           pass: pass
-        },
-        tls: {
-          ciphers: 'SSLv3'
         }
       });
     }
