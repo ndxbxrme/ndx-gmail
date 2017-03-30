@@ -31,14 +31,17 @@ module.exports = (ndx) ->
   ndx.gmail =
     send: (ctx, cb) ->
       if user and pass
+        console.log 'sending', user, pass
         if process.env.GMAIL_OVERRIDE
           ctx.to = process.env.GMAIL_OVERRIDE
+        console.log 'to', ctx.to
         if not process.env.GMAIL_DISABLE
           ndx.app.mailer.send ctx.template,
             to: ctx.to
             subject: fillTemplate ctx.subject, ctx
             context: ctx
           , (err, res) ->
+            console.log err, res
             if err
               safeCallback 'error', err
             else
