@@ -19,10 +19,7 @@ module.exports = (ndx) ->
   if user and pass
     mailer.extend ndx.app,
       from: user
-      host: 'smtp.gmail.com'
-      secureConnection: true
-      port: 465
-      transportMethod: 'SMTP'
+      service: 'Gmail'
       auth:
         user: user
         pass: pass
