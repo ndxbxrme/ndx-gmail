@@ -1,6 +1,6 @@
 {
   "name": "ndx-gmail",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "connect to gsuite and send emails for ndx-framework",
   "main": "build/index.js",
   "scripts": {

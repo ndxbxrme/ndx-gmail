@@ -35,15 +35,12 @@
       mailer.extend(ndx.app, {
         from: user,
         host: 'smtp.gmail.com',
-        secureConnection: true,
+        secureConnection: false,
         port: 465,
         transportMethod: 'SMTP',
         auth: {
           user: user,
           pass: pass
-        },
-        tls: {
-          ciphers: 'SSLv3'
         }
       });
     }
