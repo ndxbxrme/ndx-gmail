@@ -36,6 +36,7 @@ module.exports = (ndx) ->
           ctx.to = process.env.GMAIL_OVERRIDE
         console.log 'to', ctx.to
         if not process.env.GMAIL_DISABLE
+          console.log 'i want to send'
           ndx.app.mailer.send ctx.template,
             to: ctx.to
             subject: fillTemplate ctx.subject, ctx

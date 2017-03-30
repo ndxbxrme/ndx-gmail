@@ -56,6 +56,7 @@
           }
           console.log('to', ctx.to);
           if (!process.env.GMAIL_DISABLE) {
+            console.log('i want to send');
             return ndx.app.mailer.send(ctx.template, {
               to: ctx.to,
               subject: fillTemplate(ctx.subject, ctx),
