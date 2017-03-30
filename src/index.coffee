@@ -26,6 +26,8 @@ module.exports = (ndx) ->
       auth:
         user: user
         pass: pass
+      tls:
+        ciphers: 'SSLv3'
   ndx.gmail =
     send: (ctx, cb) ->
       if user and pass
