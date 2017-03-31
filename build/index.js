@@ -68,10 +68,7 @@
               return typeof cb === "function" ? cb(err, res) : void 0;
             });
           } else {
-            console.log('sending email');
-            console.log(ctx.to);
-            console.log(ctx.subject);
-            return console.log(ctx.template);
+            return console.log('sending email disabled');
           }
         } else {
           console.log('missing gmail info');

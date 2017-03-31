@@ -47,10 +47,7 @@ module.exports = (ndx) ->
               safeCallback 'send', res
             cb? err, res
         else
-          console.log 'sending email'
-          console.log ctx.to
-          console.log ctx.subject
-          console.log ctx.template
+          console.log 'sending email disabled'
       else
         console.log 'missing gmail info'
         cb? 'no user'
